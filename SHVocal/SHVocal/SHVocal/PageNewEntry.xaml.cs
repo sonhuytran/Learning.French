@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
 
 namespace SHVocal
 {
@@ -19,6 +7,18 @@ namespace SHVocal
     /// </summary>
     public partial class PageNewEntry : Page
     {
+        private static PageNewEntry pageNewEntry = null;
+
+        public static PageNewEntry GetInstance()
+        {
+            if (null == PageNewEntry.pageNewEntry)
+            {
+                PageNewEntry.pageNewEntry = new PageNewEntry();
+            }
+
+            return PageNewEntry.pageNewEntry;
+        }
+
         public PageNewEntry()
         {
             InitializeComponent();

@@ -1,0 +1,40 @@
+﻿<Page
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SHVocal" x:Class="SHVocal.PageAllEntries" 
+      mc:Ignorable="d" 
+      d:DesignHeight="480" d:DesignWidth="640"
+	Title="PageAllEntries"
+    Loaded="Page_Loaded">
+    <Page.Resources>
+        <CollectionViewSource x:Key="translationViewSource"
+                d:DesignSource="{d:DesignInstance local:Translation, CreateList=True}" />
+    </Page.Resources>
+    <DockPanel>
+    	<local:SHPageHeader HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Top" Title="All Entries" Subtitle="All your translations and articles"
+                            Foreground="Gold" DockPanel.Dock="Top"/>
+        <Grid VerticalAlignment="Stretch" Margin="10, 0, 10, 10" DataContext="{StaticResource translationViewSource}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" MinWidth="100" MaxWidth="300"/>
+                <ColumnDefinition Width="2" MinWidth="2" MaxWidth="2"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            
+            <ListBox Name="lbxTranslationEntries"
+                     VerticalAlignment="Stretch"                     
+                     Grid.Row="0" Grid.Column="0"
+                     ItemsSource="{Binding}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=FromText}"
+                                   Cursor="Hand"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <GridSplitter Grid.Row="0" Grid.Column="1"/>
+            <WebBrowser Grid.Row="0" Grid.Column="2"/>
+        </Grid>
+    </DockPanel>
+</Page>

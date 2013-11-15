@@ -1,16 +1,14 @@
 ﻿<Window x:Class="SHVocal.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:sys="clr-namespace:System;assembly=mscorlib"        
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:shvocal="clr-namespace:SHVocal"
         Title="MainWindow"
         Height="600" Width="800"
-        Background="Maroon">
+        Background="Maroon"
+        >
     <Window.Resources>
-        <x:Array x:Key="buttons" Type="{x:Type sys:String}">
-            <sys:String>All Vocals</sys:String>
-            <sys:String>New Entry</sys:String>
-        </x:Array>
-    	<Style TargetType="{x:Type RadioButton}"
+        <Style TargetType="{x:Type RadioButton}"
                x:Key="buttonstripe1">
     		<Setter Property="Foreground" Value="White"/>
 			<Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -58,10 +56,12 @@
             <ColumnDefinition Width="1" MaxWidth="1" MinWidth="1"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
-        <ListBox Grid.Column="0" ItemsSource="{StaticResource ResourceKey=buttons}"
+
+        <ListBox Grid.Column="0" ItemsSource="{x:Static Member=shvocal:MainWindow.menuItems}"
                  HorizontalContentAlignment="Stretch" VerticalAlignment="Top" Background="Transparent"
-				 BorderThickness="0" Height="Auto" Margin="0,10,0,0">
+				 BorderThickness="0" Height="Auto" Margin="0,10,0,0"
+                 Name="lbxMenu"
+                 SelectionChanged="ListBox_SelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <RadioButton Content="{Binding Mode=OneWay}" Style="{DynamicResource buttonstripe1}" GroupName="ListButton" Height="100"
@@ -93,6 +93,7 @@
         		</LinearGradientBrush>
         	</GridSplitter.Background>
         </GridSplitter>
-        <Frame x:Name="frameContent" Content="Frame" Grid.Column="2" Margin="0"/>
+        <Frame x:Name="frameContent" Grid.Column="2" Margin="0"
+               NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

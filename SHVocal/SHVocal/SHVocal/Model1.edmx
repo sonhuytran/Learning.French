@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SHVocalDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2006/04/edm/ssdl">
+        <EntityContainer Name="SHVocalDBModelStoreContainer">
+          <EntitySet Name="Article" EntityType="SHVocalDBModel.Store.Article" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Language" EntityType="SHVocalDBModel.Store.Language" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="sysdiagrams" EntityType="SHVocalDBModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Translation" EntityType="SHVocalDBModel.Store.Translation" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Article_ForLanguage_Language_Id" Association="SHVocalDBModel.Store.FK_Article_ForLanguage_Language_Id">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="Article" EntitySet="Article" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Translation_FromLanguage_Language_Id" Association="SHVocalDBModel.Store.FK_Translation_FromLanguage_Language_Id">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="Translation" EntitySet="Translation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Translation_ToLanguage_Language_Id" Association="SHVocalDBModel.Store.FK_Translation_ToLanguage_Language_Id">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="Translation" EntitySet="Translation" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ForLanguage" Type="bigint" />
+          <Property Name="Title" Type="nvarchar" MaxLength="256" />
+          <Property Name="ArticleContent" Type="text" />
+        </EntityType>
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Translation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FromLanguage" Type="bigint" />
+          <Property Name="ToLanguage" Type="bigint" />
+          <Property Name="FromText" Type="text" />
+          <Property Name="ToText" Type="text" />
+          <Property Name="InsertionDate" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_Article_ForLanguage_Language_Id">
+          <End Role="Language" Type="SHVocalDBModel.Store.Language" Multiplicity="0..1" />
+          <End Role="Article" Type="SHVocalDBModel.Store.Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="ForLanguage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Translation_FromLanguage_Language_Id">
+          <End Role="Language" Type="SHVocalDBModel.Store.Language" Multiplicity="0..1" />
+          <End Role="Translation" Type="SHVocalDBModel.Store.Translation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Translation">
+              <PropertyRef Name="FromLanguage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Translation_ToLanguage_Language_Id">
+          <End Role="Language" Type="SHVocalDBModel.Store.Language" Multiplicity="0..1" />
+          <End Role="Translation" Type="SHVocalDBModel.Store.Translation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Translation">
+              <PropertyRef Name="ToLanguage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SHVocalDBModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2006/04/edm">
+        <EntityContainer Name="SHVocalDBEntities">
+          <EntitySet Name="Article" EntityType="SHVocalDBModel.Article" />
+          <EntitySet Name="Language" EntityType="SHVocalDBModel.Language" />
+          <EntitySet Name="sysdiagrams" EntityType="SHVocalDBModel.sysdiagrams" />
+          <EntitySet Name="Translation" EntityType="SHVocalDBModel.Translation" />
+          <AssociationSet Name="FK_Article_ForLanguage_Language_Id" Association="SHVocalDBModel.FK_Article_ForLanguage_Language_Id">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="Article" EntitySet="Article" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Translation_FromLanguage_Language_Id" Association="SHVocalDBModel.FK_Translation_FromLanguage_Language_Id">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="Translation" EntitySet="Translation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Translation_ToLanguage_Language_Id" Association="SHVocalDBModel.FK_Translation_ToLanguage_Language_Id">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="Translation" EntitySet="Translation" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="ArticleContent" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Language" Relationship="SHVocalDBModel.FK_Article_ForLanguage_Language_Id" FromRole="Article" ToRole="Language" />
+        </EntityType>
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Article" Relationship="SHVocalDBModel.FK_Article_ForLanguage_Language_Id" FromRole="Language" ToRole="Article" />
+          <NavigationProperty Name="Translation" Relationship="SHVocalDBModel.FK_Translation_FromLanguage_Language_Id" FromRole="Language" ToRole="Translation" />
+          <NavigationProperty Name="Translation1" Relationship="SHVocalDBModel.FK_Translation_ToLanguage_Language_Id" FromRole="Language" ToRole="Translation" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Translation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FromText" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="ToText" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="InsertionDate" Type="DateTime" />
+          <NavigationProperty Name="Language" Relationship="SHVocalDBModel.FK_Translation_FromLanguage_Language_Id" FromRole="Translation" ToRole="Language" />
+          <NavigationProperty Name="Language1" Relationship="SHVocalDBModel.FK_Translation_ToLanguage_Language_Id" FromRole="Translation" ToRole="Language" />
+        </EntityType>
+        <Association Name="FK_Article_ForLanguage_Language_Id">
+          <End Role="Language" Type="SHVocalDBModel.Language" Multiplicity="0..1" />
+          <End Role="Article" Type="SHVocalDBModel.Article" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_Translation_FromLanguage_Language_Id">
+          <End Role="Language" Type="SHVocalDBModel.Language" Multiplicity="0..1" />
+          <End Role="Translation" Type="SHVocalDBModel.Translation" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_Translation_ToLanguage_Language_Id">
+          <End Role="Language" Type="SHVocalDBModel.Language" Multiplicity="0..1" />
+          <End Role="Translation" Type="SHVocalDBModel.Translation" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="urn:schemas-microsoft-com:windows:storage:mapping:CS">
+        <EntityContainerMapping StorageEntityContainer="SHVocalDBModelStoreContainer" CdmEntityContainer="SHVocalDBEntities">
+          <EntitySetMapping Name="Article"><EntityTypeMapping TypeName="SHVocalDBModel.Article"><MappingFragment StoreEntitySet="Article">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="Title" ColumnName="Title" />
+            <ScalarProperty Name="ArticleContent" ColumnName="ArticleContent" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Language"><EntityTypeMapping TypeName="SHVocalDBModel.Language"><MappingFragment StoreEntitySet="Language">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams"><EntityTypeMapping TypeName="SHVocalDBModel.sysdiagrams"><MappingFragment StoreEntitySet="sysdiagrams">
+            <ScalarProperty Name="name" ColumnName="name" />
+            <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+            <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+            <ScalarProperty Name="version" ColumnName="version" />
+            <ScalarProperty Name="definition" ColumnName="definition" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Translation"><EntityTypeMapping TypeName="SHVocalDBModel.Translation"><MappingFragment StoreEntitySet="Translation">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="FromText" ColumnName="FromText" />
+            <ScalarProperty Name="ToText" ColumnName="ToText" />
+            <ScalarProperty Name="InsertionDate" ColumnName="InsertionDate" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <AssociationSetMapping Name="FK_Article_ForLanguage_Language_Id" TypeName="SHVocalDBModel.FK_Article_ForLanguage_Language_Id" StoreEntitySet="Article">
+            <EndProperty Name="Language">
+              <ScalarProperty Name="Id" ColumnName="ForLanguage" />
+            </EndProperty>
+            <EndProperty Name="Article">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <Condition ColumnName="ForLanguage" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_Translation_FromLanguage_Language_Id" TypeName="SHVocalDBModel.FK_Translation_FromLanguage_Language_Id" StoreEntitySet="Translation">
+            <EndProperty Name="Language">
+              <ScalarProperty Name="Id" ColumnName="FromLanguage" />
+            </EndProperty>
+            <EndProperty Name="Translation">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <Condition ColumnName="FromLanguage" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_Translation_ToLanguage_Language_Id" TypeName="SHVocalDBModel.FK_Translation_ToLanguage_Language_Id" StoreEntitySet="Translation">
+            <EndProperty Name="Language">
+              <ScalarProperty Name="Id" ColumnName="ToLanguage" />
+            </EndProperty>
+            <EndProperty Name="Translation">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <Condition ColumnName="ToLanguage" IsNull="false" />
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2007/06/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Model1">
+        <EntityTypeShape EntityType="SHVocalDBModel.Article" Width="1.5" PointX="3" PointY="1" Height="1.787985026041667" IsExpanded="true" />
+        <EntityTypeShape EntityType="SHVocalDBModel.Language" Width="1.5" PointX="0.75" PointY="2.375" Height="1.9802864583333331" IsExpanded="true" />
+        <EntityTypeShape EntityType="SHVocalDBModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="0.75" Height="1.9802864583333326" IsExpanded="true" />
+        <EntityTypeShape EntityType="SHVocalDBModel.Translation" Width="1.5" PointX="3" PointY="3.625" Height="2.1725878906249996" IsExpanded="true" />
+        <AssociationConnector Association="SHVocalDBModel.FK_Article_ForLanguage_Language_Id" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="2.5814925130208337" />
+          <ConnectorPoint PointX="3" PointY="2.5814925130208337" />
+        </AssociationConnector>
+        <AssociationConnector Association="SHVocalDBModel.FK_Translation_FromLanguage_Language_Id" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="3.9901432291666667" />
+          <ConnectorPoint PointX="3" PointY="3.9901432291666667" />
+        </AssociationConnector>
+        <AssociationConnector Association="SHVocalDBModel.FK_Translation_ToLanguage_Language_Id" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="3.7450716145833334" />
+          <ConnectorPoint PointX="3" PointY="3.7450716145833334" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
